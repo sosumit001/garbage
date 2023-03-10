@@ -1,38 +1,49 @@
 import  { Schema,model } from "mongoose"
-
+const linkSchema = new Schema({
+    linkTitle:{
+        type:String,
+        required:true
+    },
+    linkVal:{
+        type:String,
+        required:true
+    }
+})
 
 const UserSchema = new Schema({
-    name:{
+    fullname:{
         type:String,
-        default:''
+        required:true
+    },
+    email:{
+        type:String,
+        required:true
     },
     username:{
         type:String,
-        default:''
+        required:true
     },
     password:{
         type:String,
-        default:''
+        required:true
     },
     createdAt: {
         type:String,
-        default:''
+        required:true
     },
-    token: String,
-    userLinks : [
-        {
-            title:String,
-            link:String
-        }
-    ],
-    currentBgClass:{
+    verificationToken: {
+        type: String,
+        default:'token_field'
+    },
+    isVerify: {
+        type: Boolean,
+        default: false
+    },
+    token: {
         type:String,
-        default:'bg-img-1'
+        required:true
     },
-    banner: {
-        type:Schema.Types.ObjectId,
-        ref:'Banner'
-    }
+   
 })
 
 

@@ -2,15 +2,19 @@ import { ApolloServer,gql } from "apollo-server";
 import mongoose from "mongoose";
 import typeDefs from "./gql/typeDefs.js";
 import resolvers from "./gql/resolvers/index.js";
+import dotenv from 'dotenv'
 
 
+dotenv.config({path: './config.env'})
 
  const server = new ApolloServer({
         typeDefs,
-        resolvers
+        resolvers,
+        context: ({req}) => ({req})
     })
 
-const URL = 'mongodb+srv://sumit:sumo8204@cluster.rtylk8l.mongodb.net/artful?retryWrites=true&w=majority'
+const URL = process.env.DATABASE
+const PORT = process.env.PORT
 
 mongoose.set('strictQuery', false)
 mongoose.connect(URL,{
@@ -18,7 +22,7 @@ mongoose.connect(URL,{
     useUnifiedTopology: true,
 })
 .then( () => {
-    return server.listen({port:4000})
+    return server.listen({port:PORT})
 })
 .then((res) => {
     console.log('server is running at ',res.url)

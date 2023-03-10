@@ -1,44 +1,63 @@
-import { ApolloError } from "apollo-server"
+import { ApolloError,UserInputError } from "apollo-server"
+import Mailgen from 'mailgen'
+import nodemailer from 'nodemailer'
+
 import bycrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import dotev from 'dotenv'
 
 import User from '../schema/UserSchema.js'
-import Banner from '../schema/BannerSchema.js'
+
+dotev.config({path: '../../config.env'})
+const jwtString = process.env.JWTSTRING
 
 export default {
 
     Query: {
         // get one user
-        getUser: async (_,{username}) => await User.findOne({username}),
+        getUser: async (_,{id}) => {
+            const user = await User.findById(id)
+            return user
+        },
         // get all users
         getUsers: async () => await User.find()
     },
     Mutation: {
-        async signupUser ( _, {username, password, name} ) {
+        async signupUser ( _, {username, password, fullname, email} ) {
 
             const hashPassword = await bycrypt.hash(password,12)
             const oldUser = await User.findOne({username})
+
             if(oldUser){
-                throw new ApolloError('username: '+ username + 'already exist','USER_EXIST')
+                throw new UserInputError('username is taken',{
+                    errors: {
+                        username:'This username is taken'
+                    }
+                })
             }
             const user = new User({
                 username:username,
                 password:hashPassword,
                 createdAt:new Date().toISOString(),
-                name:name
+                fullname:fullname,
+                email:email
             })
 
             // create token
             const token = jwt.sign({
-                user_id:user._id, username
-            },"unsafe_string",{
+                user_id:user._id,
+                username,
+                fullname 
+            },jwtString,{
                 expiresIn:'2h'
             })
 
-            const banner = await Banner.findOne()
+            const verificationToken = jwt.sign({
+                email:email
+            },jwtString,{expiresIn:'10m'}).substring(0,10)
 
-            user.banner = banner
             user.token = token
+            user.verificationToken = verificationToken
 
             const res = await user.save()
 
@@ -48,6 +67,78 @@ export default {
             }
             
         },
+        async sendVerificationEmail(_,{email}){
+            const user = await User.findOne({email})
+            if(!user) throw new Error('User not found')
+
+            //generate verification URL with user verification token
+
+            const verificationUrl = `http://localhost:5173/verify/${user.verificationToken}`
+
+            //create Mailgen email template
+            const mailGenerator = new Mailgen({
+                theme:'default',
+                product: {
+                    name:'Linktree || artful',
+                    link:'http://localhost:5173'
+                }
+            })
+
+            const emailBody = {
+                body: {
+                    intro: 'Welcome to Artful! Please verify your email address by clicking the button below:',
+                    action: {
+                        instructions: 'Click the button below to verify your email:',
+                        button: {
+                          color: '#22BC66',
+                          text: 'Verify your email',
+                          link: verificationUrl
+                        }
+                      },
+                      outro: 'If you did not create an account with Artful, please disregard this email.'
+    
+                }
+            }
+
+            const emailHTML = mailGenerator.generate(emailBody)
+            const emailTEXT = mailGenerator.generatePlaintext(emailBody)
+
+            //sending email using nodemailer
+            const transporter = nodemailer.createTransport({
+                service:'gmail',
+                auth: {
+                    user: 'sosumit001@gmail.com',
+                    pass: 'vgutoivzbjdtjyom'
+                }
+            });
+
+            const info = await transporter.sendMail(
+                {
+                    from:"<noreply@artful.com>",
+                    to:email,
+                    subject:"artful :: verify your account",
+                    text:emailTEXT,
+                    html:emailHTML
+                }
+            )
+
+            return "verified successfully!!"
+
+        },
+        async verifyUser(_,{userId,verificationToken}) {
+            const user = await User.findById(userId)
+
+            if(user.verificationToken !== verificationToken) {
+                throw new Error('somethings wrong dude!')
+            }
+            user.isVerify = true
+            await user.save()
+
+            return true
+
+        }
+        ,
+
 
         async loginUser(_, {username,password}) {
             //See if exist
@@ -72,20 +163,4 @@ export default {
             //create a new token
         }
     },
-    async setName(_,{username, name}){
-        const user = await User.findOne({username})
-
-        if(!user){
-            throw new Error(`User ${username} not found`)
-        }
-
-        if(typeof user.name === 'string'){
-            await User.updateOne({username}, {$set: {name}})
-        }
-        else {
-            await User.updateOne({username},{$set:{name: name}})
-        }
-
-        return name || " "
-    }
 }

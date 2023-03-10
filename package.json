@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "nodemon node index"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +13,14 @@
   "dependencies": {
     "apollo-server": "^3.11.1",
     "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.9.3"
+    "mailgen": "^2.0.27",
+    "mongoose": "^6.9.3",
+    "nodemailer": "^6.9.1",
+    "redis": "^4.6.5",
+    "secrets": "^1.1.5",
+    "uuid": "^9.0.0"
   }
 }

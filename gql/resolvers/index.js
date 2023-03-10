@@ -1,13 +1,13 @@
 import userResolvers from "./userResolvers.js"
-import bannerResolver from "./bannerResolver.js"
-
+import linkResolvers from "./linkResolvers.js"
 
 export default {
     Query: {
         ...userResolvers.Query,
-        ...bannerResolver.Query
+        ...linkResolvers.Query
     },
     Mutation: {
-        ...userResolvers.Mutation
+        ...userResolvers.Mutation,
+        ...linkResolvers.Mutation
     }
 }

@@ -1,34 +1,53 @@
 import { gql } from "apollo-server"
 
+
 export default gql`
  
-    type Banner {
-        id:ID!
-        bgCollection:[String]
-    }
+   
+
  
     type User {
     id:ID!
-    name:String!
+    email:String!
+    fullname:String!
     username: String!
     createdAt: String!
     token: String!
     password:String!
-    banner:Banner
-    currentBgClass:String!
+    isVerify:Boolean
+    verificationToken:String
    }
- 
+   type Link {
+    id:ID!
+    linkTitle:String!
+    linkValue:String!
+    user:User!
+   }
+  
+
+   input LinkInput {
+    linkTitle:String!
+    linkValue:String!
+   }
+
    type Query {
-    getUser(username:String!): User
+    getUser(id:ID!): User!
     getUsers:[User]
 
-    getBanner(id:ID!):Banner
+    getLinks:[Link]
+    getLink(userID:ID!):Link
+    getUserLinks(userId: ID!): [Link!]!
    }
+
    
    type Mutation {
-    signupUser (username: String! password:String! name:String!) : User!
+    signupUser (username: String! password:String! fullname:String! email:String!) : User!
     loginUser (username: String! password:String!) : User!
-    setName(username:String! name:String!):String
+    sendVerificationEmail(email:String!): String!
+    verifyUser(userId:ID!, verificationToken:String!):Boolean!
+    
+    createLink(inputValue:LinkInput!,userId:ID!):Link!
+    deleteLink(linkId:ID!,userId:ID!):String!
 
    }
 `
