@@ -1,0 +1,94 @@
+
+#previewTemplate{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-image:linear-gradient(to bottom,rgb(255, 255, 255),rgb(241, 231, 231));
+    position: absolute;
+    top:0%;
+    overflow-y: hidden;
+    left:0%;
+    z-index: 4000;
+    
+}
+
+/* banner */
+.preview-template-banner{
+    position: relative;
+    background-color: rgb(87, 87, 87);
+    height: 25%;
+    width: 100%;
+    color:rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter:saturate(115%);
+    border-bottom: 1px solid rgb(0, 0, 0);
+    border-end-start-radius: 10%;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.637);
+}
+
+.preview-template-banner-username{
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    left:3%;
+    top:0%;
+    color: rgb(255, 255, 255);
+    margin-top: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 9px;
+}
+.preview-template-banner-profile {
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top:calc(100% - 30px);
+    width: 70px;
+    height: 70px;
+    background-color: rgb(56, 56, 56);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(243, 243, 243);
+    font-size: 0.8rem;
+}
+.preview-template-banner-joinedOn{
+    width: 100px;
+    height: fit-content;
+    position: absolute;
+    top:25px;
+    left:3%;
+    font-size: 0.8rem;
+    text-align: left;
+    color: rgb(255, 255, 255);
+    margin-top: 15px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 9px;
+}
+
+.bg-img-1, .bg-img-2 ,.bg-img3{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+}
+
+.bg-img-1{ background-image: url(../assets/bgTemplate/bg-img-2.svg);}
+.bg-img-2{ background-image: url(../assets/bgTemplate/bg-img-1.svg);}
+.preview-template-banner-fullname{
+    font-size: 1.8rem;
+    font-family:sans-serif;
+}
+
+/* LINKS */
+.preview-links{
+    width: 100%;
+    margin:70px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

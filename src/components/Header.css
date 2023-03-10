@@ -1,0 +1,80 @@
+#Header{
+    height: 0px;
+    background-color: yellow;
+}
+.Header-external-part-1{
+    position: absolute;
+    left:0%;
+    top:0px;
+    height:0px;
+    width: 100%;
+    transition: 400ms;
+    background-color: #c7c7c7;
+    transition-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+    filter: contrast(150%);
+    color:rgb(70, 70, 70);
+    font-size: 0px;
+    display: flex;
+    z-index: 3000;
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: flex-end;
+    justify-content: start;
+}
+
+
+.Header-menu div:first-child{
+    position: absolute;
+    width: 50%;
+    height: 0%;
+    left: 50%;
+    top:50%;
+    background-color: rgba(255, 255, 255, 0.418);
+    z-index: 4500;
+    border-radius: 50%;
+    transition: 300ms;
+}
+.changeBGMENU{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: #242424;
+    left: calc(100% - 50px);
+    top:20px;
+    z-index: 4500;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    --width:20px;
+    --height:20px;
+}
+.changeBGMENU::after{
+    content: "";
+    position: absolute;
+    width: var(--width);
+    height: var(--height);
+    border-radius: 50%;
+    border: 3px solid rgb(110, 107, 107);
+    transition: 200ms;
+
+}
+/* Header before loging */
+
+
+#Header ul{
+    display: flex;
+    list-style: none;
+    gap:30px;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+#Header ul li a{
+    color:rgb(61, 61, 61);
+    font-size: 15px;
+}
+
+
+/* Header after login */
+

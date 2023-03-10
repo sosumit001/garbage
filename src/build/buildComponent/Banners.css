@@ -1,0 +1,13 @@
+#BannersContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 80%;
+    margin: auto;
+}
+
+#BannersContainer div{
+    width: 100%;
+    height: 50px;
+    background-color: yellow;
+}

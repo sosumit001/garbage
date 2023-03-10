@@ -1,0 +1,98 @@
+.form-group {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+  
+    height: 120px;
+    padding: 12px 104px;
+    border-radius: 4px;
+    overflow-y: hidden;
+    flex-wrap: wrap;
+  }
+  
+  .form-group span {
+    color: #020202;
+    margin-right: 0.5rem;
+  }
+  
+  .form-field {
+    border: 1px solid #53515152;
+    border-radius: 4px;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    outline: none;
+    flex: 1;
+    background-color: rgb(0, 0, 0);
+    color:rgb(255, 255, 255);
+  }
+  .form-field::-moz-placeholder{
+    color:black;
+  }
+  
+  .form-field::placeholder {
+    color: #9c9c9cb6;
+  }
+
+.next-button {
+  width: 40px;
+  height: 30%;
+  padding: 8px;
+  background-color: #ffffff;
+  border:none;
+  color: #616161;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  outline: none;
+  margin-left: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+/* add link frame-1  */
+.addlink-frame-one{
+    position: absolute;
+    top:0%;
+    height: 100%;
+    width: 80%;
+    transition: 400ms;
+    animation-delay:100ms ;
+    margin-top: 30px;
+    transform: scale(1);
+}
+.addlink-frame-two{
+    position: absolute;
+    top:100%;
+    height: 100%;
+    width: 80%;
+    transition: 300ms;
+    animation-delay: 100ms;
+    margin-top: 30px;
+    transform: scale(0.9);
+}
+
+.linkInputFieldCover{
+  width: 95%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  padding: 1px 20px 1px;
+  margin: auto;
+}
+
+.linkInputFieldCover span{
+  background-color: rgb(245, 245, 245);
+  height: 55%;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 10px 0px;
+  margin-left: 2px;
+  border: 1px solid rgb(209, 209, 209);
+  border-radius: 5px;
+}

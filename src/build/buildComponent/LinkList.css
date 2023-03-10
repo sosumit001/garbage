@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200&display=swap');
+.preview-linklist-container,
+.preview-linklist-container ul,
+.preview-linklist-container ul li,
+.preview-linklist-container ul li a,
+.remove-link-atag{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.preview-linklist-container{
+  width: 98%;
+  margin: auto;
+}
+.preview-linklist-container ul{
+  list-style: none;
+  flex-direction: column;
+  width: 75%;
+  gap:20px;
+  padding-left: 0px;
+}
+.preview-linklist-container ul li{
+  height: 50px;
+  width: 100%;
+  border-radius: 20px;
+  user-select: none;
+}
+.preview-linklist-container ul li a{
+  position: relative;
+  background-image: linear-gradient(to bottom, rgb(53, 53, 53), rgb(0, 0, 0));
+  background-color: rgb(19, 19, 19);
+  width: 100%;
+  height: 100%;
+  color:rgb(255, 249, 249);
+  border-radius: 30px;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+ .remove-link-atag{
+  background-color: rgb(255, 255, 255);
+  height: 80%;
+  position: absolute;
+  width: 60px;
+  color: black;
+  top:10%;
+  left: calc(100% - 65px);
+  cursor: pointer;
+  border-radius: 20px;
+  
+}
