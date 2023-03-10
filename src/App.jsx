@@ -38,7 +38,7 @@ function App() {
     event.target.style.setProperty('--radius-eff','40%')
   }
   const handlebuildingBtn = () => {
-    (user)?window.open('/build'):window.open('/signup')
+    window.location.href = '/signup'
   }
 
   return (
