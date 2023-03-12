@@ -73,7 +73,7 @@ export default {
 
             //generate verification URL with user verification token
 
-            const verificationUrl = `http://localhost:5173/verify/${user.verificationToken}`
+            const verificationUrl = `https://linktree.art/verify/${user.verificationToken}`
 
             //create Mailgen email template
             const mailGenerator = new Mailgen({
