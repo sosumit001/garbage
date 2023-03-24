@@ -1,14 +1,5 @@
 import  { Schema,model } from "mongoose"
-const linkSchema = new Schema({
-    linkTitle:{
-        type:String,
-        required:true
-    },
-    linkVal:{
-        type:String,
-        required:true
-    }
-})
+
 
 const UserSchema = new Schema({
     fullname:{
@@ -43,7 +34,10 @@ const UserSchema = new Schema({
         type:String,
         required:true
     },
-   
+    profileImage: {
+        type: String,
+        default: 'need image!'
+    }
 })
 
 

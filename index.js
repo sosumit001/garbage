@@ -30,4 +30,3 @@ mongoose.connect(URL,{
 .catch((err) => {
     console.error('Failed to connect to Database *_* :',err)
 })
-

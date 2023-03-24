@@ -7,12 +7,20 @@ import jwt from 'jsonwebtoken'
 import dotev from 'dotenv'
 
 import User from '../schema/UserSchema.js'
+import cloudinary from 'cloudinary'
+
+import path from "path"
+
+import {fileURLToPath} from 'url'
+import { createWriteStream, unlink } from "fs"
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 dotev.config({path: '../../config.env'})
 const jwtString = process.env.JWTSTRING
 
-export default {
 
+export default {
     Query: {
         // get one user
         getUser: async (_,{id}) => {
@@ -73,14 +81,14 @@ export default {
 
             //generate verification URL with user verification token
 
-            const verificationUrl = `http://localhost:5173/verify/${user.verificationToken}`
+            const verificationUrl = `https://linktree.art/verify/${user.verificationToken}`
 
             //create Mailgen email template
             const mailGenerator = new Mailgen({
                 theme:'default',
                 product: {
                     name:'Linktree || artful',
-                    link:'http://localhost:5173'
+                    link:'https://linktree.art'
                 }
             })
 
@@ -161,6 +169,66 @@ export default {
                 throw new ApolloError('Incorrect password')
             }
             //create a new token
+        },
+        async uploadProfileImg(_,{file,user_id}) {
+            const user = await User.findById(user_id)
+
+            if(!user) {
+                throw new Error('user not found!!')
+            }
+
+            //write stream to save the file locally
+            const {filename, createReadStream} = await file
+            const stream = createReadStream()
+
+            const filePath = path.join(__dirname,`../../uploads/${filename}`)
+            const writeStream = createWriteStream(filePath)
+
+            await new Promise((resolve,reject) => {
+                stream.on('error',(error) => {
+                    writeStream.close()
+                    reject(error)
+                })
+                writeStream.on('error',(error) => {
+                    writeStream.close()
+                    reject(error)
+                })
+                writeStream.on('finish', () => {
+                    resolve()
+                })
+                stream.pipe(writeStream)
+            })
+
+            //upload file to cloudinary
+            
+            cloudinary.v2.config({
+                cloud_name: process.env.CLOUDINARY_NAME,
+                api_key: process.env.CLOUDINARY_API_KEY,
+                api_secret: process.env.CLOUDINARY_API_SECRET,
+            })
+
+            const pathName = path.join(__dirname,`../../uploads/${filePath}`)
+            const result = await cloudinary.v2.uploader.upload(pathName)
+
+            //deleting local file
+            await new Promise((resolve,reject) => {
+                unlink(filePath,(error) => {
+                    if(error) {
+                        reject(error)
+                    } else {
+                        resolve()
+                    }
+                })
+            })
+
+            // update user profile image URL in database
+            user.profileImage = result.url
+            await user.save()
+            
+            return {
+                url:result.url
+            }
         }
+           
     },
 }
