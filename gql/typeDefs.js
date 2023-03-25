@@ -1,7 +1,6 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
-  scalar Upload
   type ProfileUrl {
     url: String!
   }
@@ -16,6 +15,7 @@ export default gql`
     isVerify: Boolean
     verificationToken: String
     profileImage: String
+    publicId:String
   }
   type Link {
     id: ID!
@@ -51,6 +51,6 @@ export default gql`
 
     createLink(inputValue: LinkInput!, userId: ID!): Link!
     deleteLink(linkId: ID!, userId: ID!): String!
-    uploadProfileImg(file:Upload!, user_id:ID!): ProfileUrl!
+    uploadProfileImg(profileImage:String!,publicId:String!,user_id:ID!): ProfileUrl!
   }
 `;

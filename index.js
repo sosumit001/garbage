@@ -5,6 +5,7 @@ import resolvers from "./gql/resolvers/index.js";
 import dotenv from 'dotenv'
 
 
+
 dotenv.config({path: './config.env'})
 
  const server = new ApolloServer({

@@ -36,7 +36,11 @@ const UserSchema = new Schema({
     },
     profileImage: {
         type: String,
-        default: 'need image!'
+        default:''
+    },
+    publicId: {
+        type:String,
+        default:''
     }
 })
 
