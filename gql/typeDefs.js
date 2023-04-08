@@ -16,6 +16,7 @@ export default gql`
     verificationToken: String
     profileImage: String
     publicId:String
+    bio:String
   }
   type Link {
     id: ID!
@@ -52,5 +53,6 @@ export default gql`
     createLink(inputValue: LinkInput!, userId: ID!): Link!
     deleteLink(linkId: ID!, userId: ID!): String!
     uploadProfileImg(profileImage:String!,publicId:String!,user_id:ID!): ProfileUrl!
+    addBio(inputTxt:String!,userId:ID!):String!
   }
 `;

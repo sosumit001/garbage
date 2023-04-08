@@ -41,6 +41,10 @@ const UserSchema = new Schema({
     publicId: {
         type:String,
         default:''
+    },
+    bio: {
+        type:String,
+        default:''
     }
 })
 

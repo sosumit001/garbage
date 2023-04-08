@@ -185,7 +185,21 @@ export default {
             return {
                 url:profileImage
             }
-        }
+        },
+        async addBio(_, { inputTxt, userId }) {
+            try {
+              const user = await User.findByIdAndUpdate(
+                userId,
+                { $set: { bio: inputTxt } },
+                { new: true }
+              );
+          
+              return user.bio;
+            } catch (error) {
+              console.error(error);
+              throw new Error('Failed to add bio.');
+            }
+          }
            
     },
 }
